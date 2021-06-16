@@ -4,7 +4,7 @@ const db = new AWS.DynamoDB.DocumentClient();
 const TABLE_NAME = process.env.TABLE_NAME || "";
 const PRIMARY_KEY = process.env.PRIMARY_KEY || "";
 
-export async function handler(event: any): Promise<any> {
+export async function handler(event: any): Promise<LambdaResponse> {
 	const requestedItemId = event.pathParameters.id;
 	if (!requestedItemId) {
 		return {
@@ -27,3 +27,8 @@ export async function handler(event: any): Promise<any> {
 		return { statusCode: 500, body: JSON.stringify(dbError) };
 	}
 }
+
+type LambdaResponse = {
+	statusCode: number;
+	body: string;
+};
